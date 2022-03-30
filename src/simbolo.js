@@ -3,7 +3,28 @@ import Boton from './boton';
 export default class Simbolo extends Phaser.GameObjects.Container {
   constructor(scene, x, y) {
     super(scene, x, y);
+    this.init();
     this.create();
+  }
+  init() {
+    this.imagenes = [
+      {
+        nombre: 'cuadrado',
+        premio: 0
+      },
+      {
+        nombre: 'rombo',
+        premio: 0
+      },
+      {
+        nombre: 'circulo',
+        premio: 1
+      },
+      {
+        nombre: 'triangulo',
+        premio: 2
+      },
+    ]
   }
 
   preload() {}
@@ -28,32 +49,19 @@ export default class Simbolo extends Phaser.GameObjects.Container {
         repeat: 30,
         duration: 50,
     });
-    agitar.on('complete', this.simbolo.cambiar, this);
+    agitar.on('complete', this.simbolo.cambiar, this.simbolo);
   }
 
   cambiar() {
     let num = Math.floor(Math.random() * 4);
-    switch (num) {
-      case 0: {
-          this.simbolo.imagen.setTexture('cuadrado'); 
-          break;
-      }
-      case 1: {
-          this.simbolo.imagen.setTexture('rombo'); 
-          break;
-      }
-      case 2: {
-          this.simbolo.imagen.setTexture('circulo');
-          this.contPremios.actualizarPremiosCantidad(1); 
-          this.simbolo.aumentar(); 
-          break;
-      }
-      case 3: {
-          this.simbolo.imagen.setTexture('triangulo');
-          this.contPremios.actualizarPremiosCantidad(2);  
-          this.simbolo.aumentar(); 
-          break;
-      }
+    console.log(num);
+    console.log(this.imagenes);
+
+    this.imagen.setTexture(this.imagenes[num].nombre)
+    this.scene.contPremios.actualizarPremiosCantidad(this.imagenes[num].premio)
+    
+    if (this.imagenes[num].premio > 0) {
+      this.aumentar(); 
     }
   }
 
