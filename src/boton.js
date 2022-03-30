@@ -1,7 +1,7 @@
 export default class Boton extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, callback, texto) {
+  constructor(scene, x, y, funcionEjecutar, texto) {
     super(scene, x, y);
-    this.callback = callback;
+    this.funcionEjecutar = funcionEjecutar;
     this.texto = texto;
     
     //forma
@@ -13,7 +13,7 @@ export default class Boton extends Phaser.GameObjects.Container {
     
     //botón
     this.boton = this.scene.add.text(0, 155, this.texto, { font: '40px Verdana', fill: '#000', fontSize: 45 }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-    this.boton.on('pointerdown', this.callback, this.scene);
+    this.boton.on('pointerdown', this.funcionEjecutar, this.scene);
     this.add(this.boton);
     
     this.scene.add.existing(this);

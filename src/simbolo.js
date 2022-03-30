@@ -54,11 +54,12 @@ export default class Simbolo extends Phaser.GameObjects.Container {
 
   cambiar() {
     let num = Math.floor(Math.random() * 4);
-    console.log(num);
-    console.log(this.imagenes);
 
     this.imagen.setTexture(this.imagenes[num].nombre)
     this.scene.contPremios.actualizarPremiosCantidad(this.imagenes[num].premio)
+
+    this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);
+    this.scene.contPremios.resultadoTexto.setText(`Da ${this.imagenes[num].premio} de premio.`);
     
     if (this.imagenes[num].premio > 0) {
       this.aumentar(); 
