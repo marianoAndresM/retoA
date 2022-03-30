@@ -29,11 +29,11 @@ export default class Escena extends Phaser.Scene {
         let gameH = this.sys.game.config.height;
 
         //texto superior
-        const txtSaludo = this.add.text(gameW / 2, 120, 'Minijuego', { font: '50px Garamond', fill: '#000' }).setOrigin(0.5);
+        this.add.text(gameW / 2, 50, 'Juego', { font: '50px Garamond', fill: '#000' }).setOrigin(0.5);
 
-        this.cont = new ContPremios(this, gameW / 2, gameH - 100);
+        this.simbolo = new Simbolo(this, gameW / 2, gameH / 2 - 50);
         
-        this.simb = new Simbolo(this, gameW / 2, gameH / 2);
+        this.contPremios = new ContPremios(this, gameW / 2, gameH - 100);
            
     }
 

@@ -3,13 +3,10 @@ import Boton from './boton';
 export default class Simbolo extends Phaser.GameObjects.Container {
   constructor(scene, x, y) {
     super(scene, x, y);
-    this.preload();
     this.create();
   }
 
-  preload() {
-
-  }
+  preload() {}
 
   create() {
 
@@ -24,37 +21,37 @@ export default class Simbolo extends Phaser.GameObjects.Container {
 
   mezclar ()  {
     const agitar = this.tweens.add({
-        targets: this.simb.imagen,
+        targets: this.simbolo.imagen,
         x: '-=50',
         ease: 'linear',
         yoyo: true,
         repeat: 30,
         duration: 50,
     });
-    agitar.on('complete', this.simb.cambiar, this);
+    agitar.on('complete', this.simbolo.cambiar, this);
   }
 
   cambiar() {
     let num = Math.floor(Math.random() * 4);
     switch (num) {
       case 0: {
-          this.simb.imagen.setTexture('cuadrado'); 
+          this.simbolo.imagen.setTexture('cuadrado'); 
           break;
       }
       case 1: {
-          this.simb.imagen.setTexture('rombo'); 
+          this.simbolo.imagen.setTexture('rombo'); 
           break;
       }
       case 2: {
-          this.simb.imagen.setTexture('circulo');
-          this.cont.actualizarPremiosCantidad(1); 
-          this.simb.aumentar(); 
+          this.simbolo.imagen.setTexture('circulo');
+          this.contPremios.actualizarPremiosCantidad(1); 
+          this.simbolo.aumentar(); 
           break;
       }
       case 3: {
-          this.simb.imagen.setTexture('triangulo');
-          this.cont.actualizarPremiosCantidad(2);  
-          this.simb.aumentar(); 
+          this.simbolo.imagen.setTexture('triangulo');
+          this.contPremios.actualizarPremiosCantidad(2);  
+          this.simbolo.aumentar(); 
           break;
       }
     }

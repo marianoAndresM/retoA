@@ -2,8 +2,8 @@ export default class ContPremios extends Phaser.GameObjects.Container {
   constructor(scene, x, y) {
     super(scene, x, y);
 
-    this.premiosTexto = this.scene.add.text(-200, 0, 'Premios: ', { font: '60px Verdana', fill: '#000' });
-    this.premiosCantidad = this.scene.add.text(100, 0, this.scene.premios, { font: '60px Verdana', fill: '#000' } );
+    this.premiosTexto = this.scene.add.text(-200, 0, 'Premios: ', { font: '40px Verdana', fill: '#000' });
+    this.premiosCantidad = this.scene.add.text(100, 0, this.scene.premios, { font: '40px Verdana', fill: '#000' } );
     
     this.add(this.premiosTexto);
     this.add(this.premiosCantidad);
