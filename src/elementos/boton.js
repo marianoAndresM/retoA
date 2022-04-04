@@ -5,7 +5,11 @@ export default class Boton extends Phaser.GameObjects.Container {
     this.texto = texto;
     
     //botón
-    this.boton = this.scene.add.text(0, 180, this.texto, { font: '40px Verdana', fill: '#ffffff', fontSize: 45 }).setOrigin(0.5);
+    this.boton = this.scene.add.text(0, 180, this.texto, { 
+      fontSize: 40,
+      fontFamily: 'fuente',
+      fill: '#fff'
+     }).setOrigin(0.5);
     this.boton.depth = 1;
     
     //hitArea

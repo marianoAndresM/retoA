@@ -1,5 +1,9 @@
 import 'phaser';
-import Escena from './escena';
+import Game from './escenas/game';
+import Carga from './escenas/carga';
+import Precarga from './escenas/precarga';
+import Menu from './escenas/menu';
+
 
 const config = {
     type: Phaser.AUTO,
@@ -10,7 +14,8 @@ const config = {
         width: 800,
         height: 600
     },
-    scene: [Escena]
+    scene: [Precarga, Carga, Menu, Game],
+    pixelArt: false
 };
 
 export class Juego extends Phaser.Game{

@@ -31,7 +31,7 @@ export default class Simbolo extends Phaser.GameObjects.Container {
 
   create() {
 
-    this.imagen = this.scene.add.image(0,0,'cuadrado');
+    this.imagen = this.scene.add.image(0,0,'rombo');
     this.add(this.imagen);
 
     this.boton = new Boton(this.scene, 0, 0, this.mezclar, 'Jugar');
