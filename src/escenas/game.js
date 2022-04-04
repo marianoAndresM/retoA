@@ -22,7 +22,7 @@ export default class Game extends Phaser.Scene {
         let gameH = this.sys.game.config.height;
 
         //texto superior
-        this.add.text(gameW / 2, 50, 'Juego', { font: '50px fuente', fill: '#fff' }).setOrigin(0.5);
+        this.add.text(gameW / 2, 100, 'Juego', { font: '50px fuente', fill: '#fff' }).setOrigin(0.5);
 
         this.simbolo = new Simbolo(this, gameW / 2, gameH / 2 - 50);
         

@@ -28,5 +28,8 @@ export default class Menu extends Phaser.Scene {
 
   avanzar() {
     this.scene.start('game');
+    this.scene.start('hud');
+    this.scene.bringToTop('hud');
+
   }
 }

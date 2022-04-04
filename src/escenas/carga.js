@@ -37,7 +37,7 @@ export default class Carga extends Phaser.Scene {
     this.load.image('circulo', circulo);
     this.load.image('triangulo', triangulo);
     
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 100; i++) {
       this.load.image('rombo'+i, rombo);
     }
   }

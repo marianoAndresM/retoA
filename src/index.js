@@ -3,6 +3,7 @@ import Game from './escenas/game';
 import Carga from './escenas/carga';
 import Precarga from './escenas/precarga';
 import Menu from './escenas/menu';
+import Hud from './escenas/hud';
 
 
 const config = {
@@ -14,8 +15,7 @@ const config = {
         width: 800,
         height: 600
     },
-    scene: [Precarga, Carga, Menu, Game],
-    pixelArt: false
+    scene: [Precarga, Carga, Menu, Hud, Game]
 };
 
 export class Juego extends Phaser.Game{
