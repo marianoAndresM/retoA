@@ -41,15 +41,23 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   }
 
   mezclar ()  {
-    const agitar = this.tweens.add({
-        targets: this.simbolo.imagen,
-        x: '-=50',
-        ease: 'linear',
-        yoyo: true,
-        repeat: 30,
-        duration: 50,
-    });
-    agitar.on('complete', this.simbolo.cambiar, this.simbolo);
+
+    let times = 30
+
+    this.pingTimer = this.time.addEvent({
+      delay: 75,
+      callback: () => {
+        var textura = this.simbolo.imagenes[Math.floor(Math.random() * this.simbolo.imagenes.length)].nombre;
+        this.simbolo.imagen.setTexture(textura)
+        times--;
+        if (times === 0) {
+          this.pingTimer.remove();
+          this.simbolo.cambiar();
+        }
+      },
+      loop: true
+    })
+
   }
 
   cambiar() {
@@ -68,7 +76,7 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   }
 
   aumentar() {
-    const agrandar = this.scene.tweens.add({
+    this.scene.tweens.add({
       targets: this.imagen,
       scaleX: 1.6,
       scaleY: 1.6,
