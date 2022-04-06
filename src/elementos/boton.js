@@ -5,7 +5,7 @@ export default class Boton extends Phaser.GameObjects.Container {
     this.texto = texto;
     
     //botón
-    this.boton = this.scene.add.text(0, 180, this.texto, { 
+    this.boton = this.scene.add.text(0, 185, this.texto, { 
       fontSize: 40,
       fontFamily: 'fuente',
       fill: '#ddd'
@@ -13,12 +13,12 @@ export default class Boton extends Phaser.GameObjects.Container {
     this.boton.depth = 1;
     
     //hitArea
-    const hitArea = new Phaser.Geom.Rectangle(-this.boton.width, 190 -this.boton.height, 2 * this.boton.width, 2*this.boton.height - 20);
+    const hitArea = new Phaser.Geom.Rectangle(-(this.boton.width/2 + 30) , 200 -this.boton.height, this.boton.width + 30, this.boton.height + 20);
     
     //forma
     this.forma = this.scene.add.graphics();
     this.forma.fillStyle(0x000000, 0.7);
-    this.forma.fillRoundedRect(-this.boton.width, 180 -this.boton.height, 2 * this.boton.width, 2*this.boton.height, 20);
+    this.forma.fillRoundedRect(-(this.boton.width/2 + 30) , 200 -this.boton.height, this.boton.width + 60, this.boton.height + 20, 20);
     this.forma.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
     this.forma.on('pointerover', function() {
       this.boton.setColor('#fff');

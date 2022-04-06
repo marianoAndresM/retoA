@@ -27,7 +27,12 @@ export default class Game extends Phaser.Scene {
         this.simbolo = new Simbolo(this, gameW / 2, gameH / 2 - 50);
         
         this.contPremios = new ContPremios(this, gameW / 2, gameH - 100);
-          
+
+        // this.efectoMonedas()
+        
+        
     }
+    
+
 
 }

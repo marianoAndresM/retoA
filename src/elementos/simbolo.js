@@ -1,4 +1,5 @@
 import Boton from './boton';
+import Stats from "../stats";
 
 export default class Simbolo extends Phaser.GameObjects.Container {
   constructor(scene, x, y) {
@@ -18,20 +19,18 @@ export default class Simbolo extends Phaser.GameObjects.Container {
       },
       {
         nombre: 'circulo',
-        premio: 1
+        premio: 2
       },
       {
         nombre: 'triangulo',
-        premio: 2
+        premio: 5
       },
     ]
+
   }
 
-  preload() {}
-
   create() {
-
-    this.imagen = this.scene.add.image(0,0,'rombo');
+    this.imagen = this.scene.add.image(0,0,'cuadrado');
     this.add(this.imagen);
 
     this.boton = new Boton(this.scene, 0, 0, this.mezclar, 'Jugar');
@@ -43,12 +42,17 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   mezclar ()  {
 
     let times = 30
-
+    let texturaIndexPrevia = 0
     this.pingTimer = this.time.addEvent({
       delay: 75,
       callback: () => {
-        var textura = this.simbolo.imagenes[Math.floor(Math.random() * this.simbolo.imagenes.length)].nombre;
-        this.simbolo.imagen.setTexture(textura)
+        let texturaIndex
+        do {
+          texturaIndex = Math.floor(Math.random() * this.simbolo.imagenes.length); 
+        } while (texturaIndexPrevia === texturaIndex)
+        texturaIndexPrevia = texturaIndex;
+
+        this.simbolo.imagen.setTexture(this.simbolo.imagenes[texturaIndex].nombre)
         times--;
         if (times === 0) {
           this.pingTimer.remove();
@@ -64,8 +68,12 @@ export default class Simbolo extends Phaser.GameObjects.Container {
     let num = Math.floor(Math.random() * 4);
 
     this.imagen.setTexture(this.imagenes[num].nombre)
+
+    Stats.actual = this.imagenes[num].premio 
     
-    this.scene.events.emit('cambioCantidad', this.scene.registry.set('premiosCantidad', this.imagenes[num].premio));
+    if (this.imagenes[num].premio > 0) {
+      this.scene.events.emit('cambioCantidad');
+    }
 
     this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);
     this.scene.contPremios.resultadoTexto.setText(`Da ${this.imagenes[num].premio} de premio.`);
