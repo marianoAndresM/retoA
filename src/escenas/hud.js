@@ -37,6 +37,8 @@ export default class Hud extends Phaser.Scene {
     const contenedor = this.add.container(0, 0, this.fondo, this.premiosCantidad);
     this.add.existing(contenedor);
 
+    this.monedaSound = this.sound.add('monedaAudio')
+
   }
   
   actualizarPremiosCantidad (parent, key, data) {
@@ -69,6 +71,7 @@ export default class Hud extends Phaser.Scene {
 
   incrementarCantidad(num) {
     this.efectoMonedas()
+    this.monedaSound.play()
     this.tweensMoneda.on('complete', () => {
       this.premios++
       this.premiosCantidad.setText(`${this.premios}`);

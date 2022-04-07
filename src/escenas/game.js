@@ -18,6 +18,15 @@ export default class Game extends Phaser.Scene {
 
     create () {
 
+
+        this.bandasonoraNivel = this.sound.add('bgMusic', { loop: true, volume: 0 });
+        this.bandasonoraNivel.play();
+        this.tweens.add({
+            targets: this.bandasonoraNivel,
+            volume: 1,
+            duration: 1500
+        })
+
         let gameW = this.sys.game.config.width;
         let gameH = this.sys.game.config.height;
 

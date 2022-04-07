@@ -75,8 +75,8 @@ export default class Simbolo extends Phaser.GameObjects.Container {
       this.scene.events.emit('cambioCantidad');
     }
 
-    this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);
-    this.scene.contPremios.resultadoTexto.setText(`Da ${this.imagenes[num].premio} de premio.`);
+    // this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);
+    // this.scene.contPremios.resultadoTexto.setText(`Da ${this.imagenes[num].premio} de premio.`);
     
     if (this.imagenes[num].premio > 0) {
       this.aumentar(); 

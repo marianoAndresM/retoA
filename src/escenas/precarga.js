@@ -1,4 +1,4 @@
-import bg from '../assets/bg.png'
+import bg from '../assets/images/bg.png'
 
 export default class Precarga extends Phaser.Scene {
   constructor() {
