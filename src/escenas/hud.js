@@ -26,7 +26,7 @@ export default class Hud extends Phaser.Scene {
     this.premiosTexto.x = this.sys.game.config.width/2 - this.premiosTexto.width + 50;
     this.premiosTexto.depth = 1;
 
-    this.premiosCantidad = this.add.text(this.sys.game.config.width/2 + 70, 0, `${this.premios}`, {
+    this.premiosCantidad = this.add.text(this.sys.game.config.width/2 + 70, 0, this.premios, {
       fontSize: 36,
       fontFamily: 'fuente',
       fill: '#fff' });
@@ -74,7 +74,7 @@ export default class Hud extends Phaser.Scene {
     this.monedaSound.play()
     this.tweensMoneda.on('complete', () => {
       this.premios++
-      this.premiosCantidad.setText(`${this.premios}`);
+      this.premiosCantidad.setText(this.premios);
       num--
       if (num > 0) {
         this.incrementarCantidad(num)
