@@ -1,5 +1,6 @@
 import ContPremios from "../elementos/marcador";
 import Simbolo from '../elementos/simbolo';
+import Boton from '../elementos/boton';
 
 export default class Game extends Phaser.Scene {
 
@@ -10,6 +11,7 @@ export default class Game extends Phaser.Scene {
 
     init()  {
         this.premios = 0;
+        this.grupoSimbolos = []
     }
 
     preload() {
@@ -33,13 +35,36 @@ export default class Game extends Phaser.Scene {
         //texto superior
         this.add.text(gameW / 2, 100, 'Juego', { font: '50px fuente', fill: '#fff' }).setOrigin(0.5);
 
-        this.simbolo = new Simbolo(this, gameW / 2, gameH / 2 - 50);
+        this.simbolo0 = new Simbolo(this, gameW / 2 -200, gameH / 2 - 50, 0);
+        this.simbolo1 = new Simbolo(this, gameW / 2, gameH / 2 - 50, 1);
+        this.simbolo2 = new Simbolo(this, gameW / 2 +200, gameH / 2 - 50, 2);
+
+        this.grupoSimbolos.push(this.simbolo0)
+        this.grupoSimbolos.push(this.simbolo1)
+        this.grupoSimbolos.push(this.simbolo2)
         
         this.contPremios = new ContPremios(this, gameW / 2, gameH - 100);
 
-        // this.efectoMonedas()
+        //Boton que haga que se mezclen todas
+        this.boton = new Boton(this, gameW / 2, 300, this.mezclarTodas, 'Jugar');
+        this.add.existing(this.boton);
         
-        
+        //Funcion que llama a mezclar y pase el id del simbolo
+        this.game.events.on('accionAcabada', () => {
+            console.log('acabada')
+        })
+
+    }
+
+    mezclarTodas() {
+        this.boton.active = false;
+        console.log(this.boton);
+        this.grupoSimbolos.forEach(simbolo => {
+            // console.log(simbolo)
+            // console.log(this.boton);
+            // console.log(simbolo.id)
+            simbolo.mezclar()
+        })
     }
     
 

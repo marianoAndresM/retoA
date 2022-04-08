@@ -1,6 +1,8 @@
 // import Game from "./game";
 
 import Stats from "../stats";
+import cargar from "../premios";
+
 
 export default class Hud extends Phaser.Scene {
   constructor() {
@@ -10,6 +12,7 @@ export default class Hud extends Phaser.Scene {
   init()  {
     this.premios = 0;
     this.game = this.scene.get('game');
+    this.cambiosCantidad = 0
   }
 
   create() {
@@ -32,13 +35,39 @@ export default class Hud extends Phaser.Scene {
       fill: '#fff' });
     this.premiosCantidad.depth = 1;
     
-    this.game.events.on('cambioCantidad', this.actualizarPremiosCantidad, this);
+
+    // this.game.events.on('cambioCantidad', this.actualizarPremiosCantidad, this);
+     this.game.events.on('cambioCantidad', () => {
+       this.cambiosCantidad++
+       if (this.cambiosCantidad === 3) {
+         this.avisar()
+       }
+     }, this);
 
     const contenedor = this.add.container(0, 0, this.fondo, this.premiosCantidad);
     this.add.existing(contenedor);
 
     this.monedaSound = this.sound.add('monedaAudio')
 
+  }
+
+  avisar() {
+    // console.log(Stats.turnoActual);
+    // if (Stats.turnoActual[0] === Stats.turnoActual[1]) {
+      // console.log('bingo');
+      // console.log(cargar());
+      
+      Stats.actual = cargar()
+
+      console.log(Stats.actual);
+      if (Stats.actual) {
+        this.actualizarPremiosCantidad()
+      } else {
+        console.log('debajo');
+        this.events.emit('accionAcabada')
+      }
+    // }
+    this.cambiosCantidad = 0
   }
   
   actualizarPremiosCantidad (parent, key, data) {
@@ -48,8 +77,8 @@ export default class Hud extends Phaser.Scene {
   aumentarTexto() {
     const tweenAumentar = this.tweens.add({
       targets: this.premiosCantidad,
-      scaleY: 1.2,
-      scaleX: 1.2,
+      scaleY: 1.3,
+      scaleX: 1.3,
       ease: 'linear',
       repeat: 0,
       duration: 500,
@@ -65,7 +94,7 @@ export default class Hud extends Phaser.Scene {
       scaleX: 1,
       ease: 'linear',
       repeat: 0,
-      duration: 500,
+      duration: 200,
     });
   }
 

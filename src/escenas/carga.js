@@ -2,6 +2,7 @@ import cuadrado from '../assets/images/cuadrado.png';
 import rombo from '../assets/images/rombo.png';
 import circulo from '../assets/images/circulo.png';
 import triangulo from '../assets/images/triangulo.png';
+import botonJugar from '../assets/images/botonJugar.png'
 import moneda from '../assets/images/moneda.png';
 import monedaAudio from '../assets/audio/monedaAudio.mp3';
 import bgMusic from '../assets/audio/bgMusic.mp3';
@@ -41,6 +42,8 @@ export default class Carga extends Phaser.Scene {
     this.load.image('circulo', circulo);
     this.load.image('triangulo', triangulo);
     this.load.image('moneda', moneda);
+    
+    this.load.image('botonJugar', botonJugar);
 
     this.load.audio('monedaAudio', monedaAudio);
     this.load.audio('bgMusic', bgMusic);

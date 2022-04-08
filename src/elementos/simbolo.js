@@ -2,10 +2,11 @@ import Boton from './boton';
 import Stats from "../stats";
 
 export default class Simbolo extends Phaser.GameObjects.Container {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, id) {
     super(scene, x, y);
     this.init();
     this.create();
+    this.id = id
   }
   init() {
     this.imagenes = [
@@ -21,20 +22,18 @@ export default class Simbolo extends Phaser.GameObjects.Container {
         nombre: 'circulo',
         premio: 2
       },
-      {
-        nombre: 'triangulo',
-        premio: 5
-      },
+      // {
+      //   nombre: 'triangulo',
+      //   premio: 5
+      // },
     ]
 
   }
 
   create() {
     this.imagen = this.scene.add.image(0,0,'cuadrado');
+    this.imagen.setScale(0.8)
     this.add(this.imagen);
-
-    this.boton = new Boton(this.scene, 0, 0, this.mezclar, 'Jugar');
-    this.add(this.boton);
 
     this.scene.add.existing(this);
   }
@@ -43,20 +42,40 @@ export default class Simbolo extends Phaser.GameObjects.Container {
 
     let times = 30
     let texturaIndexPrevia = 0
-    this.pingTimer = this.time.addEvent({
+
+    // this.pingTimer = this.time.addEvent({
+    //   delay: 75,
+    //   callback: () => {
+    //     let texturaIndex
+    //     do {
+    //       texturaIndex = Math.floor(Math.random() * this.simbolo.imagenes.length); 
+    //     } while (texturaIndexPrevia === texturaIndex)
+    //     texturaIndexPrevia = texturaIndex;
+
+    //     this.simbolo.imagen.setTexture(this.simbolo.imagenes[texturaIndex].nombre)
+    //     times--;
+    //     if (times === 0) {
+    //       this.pingTimer.remove();
+    //       this.simbolo.cambiar();
+    //     }
+    //   },
+    //   loop: true
+    // })
+
+    this.pingTimer = this.scene.time.addEvent({
       delay: 75,
       callback: () => {
         let texturaIndex
         do {
-          texturaIndex = Math.floor(Math.random() * this.simbolo.imagenes.length); 
+          texturaIndex = Math.floor(Math.random() * this.imagenes.length); 
         } while (texturaIndexPrevia === texturaIndex)
         texturaIndexPrevia = texturaIndex;
 
-        this.simbolo.imagen.setTexture(this.simbolo.imagenes[texturaIndex].nombre)
+        this.imagen.setTexture(this.imagenes[texturaIndex].nombre)
         times--;
         if (times === 0) {
           this.pingTimer.remove();
-          this.simbolo.cambiar();
+          this.cambiar();
         }
       },
       loop: true
@@ -65,34 +84,40 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   }
 
   cambiar() {
-    let num = Math.floor(Math.random() * 4);
+    let num = Math.floor(Math.random() * this.imagenes.length);
 
     this.imagen.setTexture(this.imagenes[num].nombre)
 
-    Stats.actual = this.imagenes[num].premio 
+    // Stats.actual = this.imagenes[num].premio 
+    const n = this.id
+    // console.log(this.id);
     
-    if (this.imagenes[num].premio > 0) {
+    Stats.turnoActual[n] = this.imagenes[num].nombre 
+    
+    // console.log(Stats.turnoActual.n);
+    
+    // if (this.imagenes[num].premio > 0) {
       this.scene.events.emit('cambioCantidad');
-    }
+    // }
 
     // this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);
     // this.scene.contPremios.resultadoTexto.setText(`Da ${this.imagenes[num].premio} de premio.`);
     
-    if (this.imagenes[num].premio > 0) {
-      this.aumentar(); 
-    }
+    // if (this.imagenes[num].premio > 0) {
+    //   this.aumentar(); 
+    // }
   }
 
-  aumentar() {
-    this.scene.tweens.add({
-      targets: this.imagen,
-      scaleX: 1.6,
-      scaleY: 1.6,
-      ease: 'linear',
-      yoyo: true,
-      repeat: 0,
-      duration: 1000,
-    });
-  }
+  // aumentar() {
+  //   this.scene.tweens.add({
+  //     targets: this.imagen,
+  //     scaleX: 1.6,
+  //     scaleY: 1.6,
+  //     ease: 'linear',
+  //     yoyo: true,
+  //     repeat: 0,
+  //     duration: 1000,
+  //   });
+  // }
 
 }
