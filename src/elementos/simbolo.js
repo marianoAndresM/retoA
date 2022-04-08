@@ -39,8 +39,6 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   }
 
   mezclar ()  {
-    console.log(this.id);
-
     let times = 25 + (8 * this.id)
     let texturaIndexPrevia = 0
 

@@ -12,6 +12,7 @@ export default class Hud extends Phaser.Scene {
     this.game = this.scene.get('game');
     this.cambiosCantidad = 0
     this.monedaSound = this.sound.add('monedaAudio')
+    this.tadaSound = this.sound.add('tadaAudio')
   }
 
   create() {
@@ -49,6 +50,8 @@ export default class Hud extends Phaser.Scene {
     this.add.existing(contenedor);
 
 
+
+
   }
 
   comprobarCombinacion() {
@@ -61,6 +64,8 @@ export default class Hud extends Phaser.Scene {
 
       if (Stats.actual) {
         this.actualizarPremiosCantidad()
+        this.tadaSound.play()
+        this.moverTextoPrueba(Stats.actual)
       } else {
         eventsCenter.emit('habilitarBoton', 'completaSinPremios')
       }
@@ -142,5 +147,51 @@ export default class Hud extends Phaser.Scene {
         },
         repeat: 0
     })
+  }
+
+  //Prueba texto lateral
+  moverTextoPrueba(cantidad) {
+    this.tinte = this.add.rectangle(0,0,800,600).setOrigin(0)
+    this.tinte.setFillStyle(0x000000, 0.4)
+    const randomX = Math.floor(Math.random() * 800)
+    const randomY = Math.floor(Math.random() * 600)
+    this.textoPrueba = this.add.text(randomX, randomY, cantidad, {
+      fontSize: 60,
+      fontFamily: 'fuentes',
+      fill: '#fff'
+    })
+    this.textoPrueba.setOrigin(0.5)
+    this.tweens.add({
+        targets: this.textoPrueba,
+        props: {
+          x: {
+          value: 400,
+            duration: 1000,
+            ease: 'linear',
+          },
+          y: {
+            value: 300,
+            duration: 1000,
+            ease: 'linear',
+          },
+          alpha: {
+            value: 0,
+            duration: 2000,
+            ease: 'Expo.easeIn',
+          }
+        }, 
+        repeat: 0,
+        completeDelay: 500,
+        onComplete: function () {
+          this.parent.scene.quitarTinte()
+        }
+      }, this)
+      
+      
+    }
+  quitarTinte() {
+    console.log('quitando');
+    this.tinte.destroy();
+
   }
 }

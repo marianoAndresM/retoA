@@ -53,14 +53,17 @@ export default class Game extends Phaser.Scene {
               this.boton.disableInteractive()
             }, this)
         
-        //Funcion que llama a mezclar y pase el id del simbolo
+        //Volver a habilitar el botón
         eventsCenter.on('habilitarBoton', function() {
             this.boton.setInteractive()
         }, this)
+
+
     }
 
-    mezclarTodas() {
 
+
+    mezclarTodas() {
         this.grupoSimbolos.forEach(simbolo => {
             simbolo.mezclar()
         })

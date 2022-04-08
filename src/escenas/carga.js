@@ -8,6 +8,7 @@ import botonJugar3 from '../assets/button/grey_button03.png'
 
 import moneda from '../assets/images/moneda.png';
 import monedaAudio from '../assets/audio/monedaAudio.mp3';
+import tadaAudio from '../assets/audio/tadaAudio.mp3';
 import bgMusic from '../assets/audio/bgMusic.mp3';
 import Boton from '../elementos/boton';
 
@@ -51,6 +52,7 @@ export default class Carga extends Phaser.Scene {
     this.load.image('botonJugar3', botonJugar3);
 
     this.load.audio('monedaAudio', monedaAudio);
+    this.load.audio('tadaAudio', tadaAudio);
     this.load.audio('bgMusic', bgMusic);
     
     
