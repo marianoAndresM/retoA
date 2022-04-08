@@ -1,6 +1,7 @@
 import ContPremios from "../elementos/marcador";
 import Simbolo from '../elementos/simbolo';
-import Boton from '../elementos/boton';
+import BotonCustom from '../elementos/botonCustom';
+import eventsCenter from '../elementos/manejadorEventos'
 
 export default class Game extends Phaser.Scene {
 
@@ -19,7 +20,6 @@ export default class Game extends Phaser.Scene {
     }
 
     create () {
-
 
         this.bandasonoraNivel = this.sound.add('bgMusic', { loop: true, volume: 0 });
         this.bandasonoraNivel.play();
@@ -45,28 +45,24 @@ export default class Game extends Phaser.Scene {
         
         this.contPremios = new ContPremios(this, gameW / 2, gameH - 100);
 
-        //Boton que haga que se mezclen todas
-        this.boton = new Boton(this, gameW / 2, 300, this.mezclarTodas, 'Jugar');
-        this.add.existing(this.boton);
+        this.boton = new BotonCustom(this, gameW / 2, 500, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'JUGAR')
+        this.add.existing(this.boton)
+        this.boton.setInteractive()
+          .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, this.mezclarTodas, this)
+          .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, function () {
+              this.boton.disableInteractive()
+            }, this)
         
         //Funcion que llama a mezclar y pase el id del simbolo
-        this.game.events.on('accionAcabada', () => {
-            console.log('acabada')
-        })
-
+        eventsCenter.on('habilitarBoton', function() {
+            this.boton.setInteractive()
+        }, this)
     }
 
     mezclarTodas() {
-        this.boton.active = false;
-        console.log(this.boton);
+
         this.grupoSimbolos.forEach(simbolo => {
-            // console.log(simbolo)
-            // console.log(this.boton);
-            // console.log(simbolo.id)
             simbolo.mezclar()
         })
     }
-    
-
-
 }

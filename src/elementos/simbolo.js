@@ -39,28 +39,10 @@ export default class Simbolo extends Phaser.GameObjects.Container {
   }
 
   mezclar ()  {
+    console.log(this.id);
 
-    let times = 30
+    let times = 25 + (8 * this.id)
     let texturaIndexPrevia = 0
-
-    // this.pingTimer = this.time.addEvent({
-    //   delay: 75,
-    //   callback: () => {
-    //     let texturaIndex
-    //     do {
-    //       texturaIndex = Math.floor(Math.random() * this.simbolo.imagenes.length); 
-    //     } while (texturaIndexPrevia === texturaIndex)
-    //     texturaIndexPrevia = texturaIndex;
-
-    //     this.simbolo.imagen.setTexture(this.simbolo.imagenes[texturaIndex].nombre)
-    //     times--;
-    //     if (times === 0) {
-    //       this.pingTimer.remove();
-    //       this.simbolo.cambiar();
-    //     }
-    //   },
-    //   loop: true
-    // })
 
     this.pingTimer = this.scene.time.addEvent({
       delay: 75,
@@ -97,7 +79,7 @@ export default class Simbolo extends Phaser.GameObjects.Container {
     // console.log(Stats.turnoActual.n);
     
     // if (this.imagenes[num].premio > 0) {
-      this.scene.events.emit('cambioCantidad');
+      this.scene.events.emit('figuraCambiada');
     // }
 
     // this.scene.contPremios.simboloTexto.setText(`Ha salido el ${this.imagenes[num].nombre}.`);

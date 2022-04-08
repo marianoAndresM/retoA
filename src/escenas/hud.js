@@ -1,8 +1,6 @@
-// import Game from "./game";
-
 import Stats from "../stats";
 import cargar from "../premios";
-
+import eventsCenter from '../elementos/manejadorEventos'
 
 export default class Hud extends Phaser.Scene {
   constructor() {
@@ -13,6 +11,7 @@ export default class Hud extends Phaser.Scene {
     this.premios = 0;
     this.game = this.scene.get('game');
     this.cambiosCantidad = 0
+    this.monedaSound = this.sound.add('monedaAudio')
   }
 
   create() {
@@ -22,36 +21,37 @@ export default class Hud extends Phaser.Scene {
     this.fondo.setSize(800, 50);
 
     //Texto
-    this.premiosTexto = this.add.text(0, 0, 'Premio: ', {
-      fontSize: 36,
+    this.premiosTexto = this.add.text(0, 5, 'Premio: ', {
+      fontSize: 30,
       fontFamily: 'fuente',
-      fill: '#fff' });
+      fill: '#fff' 
+    });
     this.premiosTexto.x = this.sys.game.config.width/2 - this.premiosTexto.width + 50;
     this.premiosTexto.depth = 1;
-
-    this.premiosCantidad = this.add.text(this.sys.game.config.width/2 + 70, 0, this.premios, {
-      fontSize: 36,
+      
+    //Texto
+    this.premiosCantidad = this.add.text(this.sys.game.config.width/2 + 70, 2, this.premios, {
+      fontSize: 33,
       fontFamily: 'fuente',
-      fill: '#fff' });
+      fill: '#fff' 
+    });
     this.premiosCantidad.depth = 1;
-    
 
-    // this.game.events.on('cambioCantidad', this.actualizarPremiosCantidad, this);
-     this.game.events.on('cambioCantidad', () => {
-       this.cambiosCantidad++
-       if (this.cambiosCantidad === 3) {
-         this.avisar()
-       }
-     }, this);
+    //Esperar a que terminen los cambios de figuras
+    this.game.events.on('figuraCambiada', () => {
+      this.cambiosCantidad++
+      if (this.cambiosCantidad === 3) {
+        this.comprobarCombinacion()
+      }
+    }, this);
 
     const contenedor = this.add.container(0, 0, this.fondo, this.premiosCantidad);
     this.add.existing(contenedor);
 
-    this.monedaSound = this.sound.add('monedaAudio')
 
   }
 
-  avisar() {
+  comprobarCombinacion() {
     // console.log(Stats.turnoActual);
     // if (Stats.turnoActual[0] === Stats.turnoActual[1]) {
       // console.log('bingo');
@@ -59,12 +59,10 @@ export default class Hud extends Phaser.Scene {
       
       Stats.actual = cargar()
 
-      console.log(Stats.actual);
       if (Stats.actual) {
         this.actualizarPremiosCantidad()
       } else {
-        console.log('debajo');
-        this.events.emit('accionAcabada')
+        eventsCenter.emit('habilitarBoton', 'completaSinPremios')
       }
     // }
     this.cambiosCantidad = 0
@@ -77,8 +75,10 @@ export default class Hud extends Phaser.Scene {
   aumentarTexto() {
     const tweenAumentar = this.tweens.add({
       targets: this.premiosCantidad,
-      scaleY: 1.3,
-      scaleX: 1.3,
+      scaleY: 1.4,
+      scaleX: 1.4,
+      x: '-=2',
+      y: '-=3',
       ease: 'linear',
       repeat: 0,
       duration: 500,
@@ -92,6 +92,8 @@ export default class Hud extends Phaser.Scene {
       targets: this.premiosCantidad,
       scaleY: 1,
       scaleX: 1,
+      x: '+=2',
+      y: '+=3',
       ease: 'linear',
       repeat: 0,
       duration: 200,
@@ -109,6 +111,7 @@ export default class Hud extends Phaser.Scene {
         this.incrementarCantidad(num)
       } else {
         this.reducirTexto()
+        eventsCenter.emit('habilitarBoton', 'completaConPremios')
       }
     })
   }
