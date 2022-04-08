@@ -2,7 +2,10 @@ import cuadrado from '../assets/images/cuadrado.png';
 import rombo from '../assets/images/rombo.png';
 import circulo from '../assets/images/circulo.png';
 import triangulo from '../assets/images/triangulo.png';
-import botonJugar from '../assets/images/botonJugar.png'
+import botonJugar1 from '../assets/button/grey_button01.png'
+import botonJugar2 from '../assets/button/grey_button02.png'
+import botonJugar3 from '../assets/button/grey_button03.png'
+
 import moneda from '../assets/images/moneda.png';
 import monedaAudio from '../assets/audio/monedaAudio.mp3';
 import bgMusic from '../assets/audio/bgMusic.mp3';
@@ -43,28 +46,29 @@ export default class Carga extends Phaser.Scene {
     this.load.image('triangulo', triangulo);
     this.load.image('moneda', moneda);
     
-    this.load.image('botonJugar', botonJugar);
+    this.load.image('botonJugar1', botonJugar1);
+    this.load.image('botonJugar2', botonJugar2);
+    this.load.image('botonJugar3', botonJugar3);
 
     this.load.audio('monedaAudio', monedaAudio);
     this.load.audio('bgMusic', bgMusic);
     
     
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 100; i++) {
       this.load.image('rombo'+i, rombo);
     }
   }
 
   create() {
-    // const botonAvanzar = new Boton(this, this.gameW/2, this.gameH/2, () => {
-    //   this.scene.start('menu')
-    // }, 'Comenzar')
 
-    this.textoEmpezar = this.add.text(0, 0, 'Haz clic para empezar', { fontSize: 25, fontFamily: 'fuente' });
-    this.textoEmpezar.setPosition(this.gameW/2 - this.textoEmpezar.width/2, this.gameH/2 - this.textoEmpezar.height/2 + 100)
+    this.textoEmpezar = this.add.text(0, 0, 'Haz clic para empezar', { fontSize: 28, fontFamily: 'fuente' });
+    this.textoEmpezar
+      .setPosition(this.gameW/2 - this.textoEmpezar.width/2, this.gameH/2 - this.textoEmpezar.height/2 + 100)
+      .setAlpha(0)
 
     this.tweens.add({
       targets: this.textoEmpezar,
-      alpha: 0,
+      alpha: 1,
       yoyo: true,
       repeat: -1,
       ease: 'linear',
@@ -72,7 +76,6 @@ export default class Carga extends Phaser.Scene {
     })
     
     this.input.on('pointerdown', function () {
-      // this.scene.start('menu')
       this.textoEmpezar.setVisible(false);
       this.progressBar.alpha = 0;
       this.bgBar.alpha = 0;
@@ -84,14 +87,12 @@ export default class Carga extends Phaser.Scene {
         onUpdate: this.transitionOut,
         data: { x: 400, y: 300 }
       });
-
     }, this);
   }
 
   transitionOut (progress) {
     this.bg.y = (600 * progress);
     this.bg.alpha = (1 - progress);
-    // this.progressBar.alpha = (-progress);
   }
 
 

@@ -1,4 +1,4 @@
-import Boton from '../elementos/boton';
+import BotonCustom from '../elementos/botonCustom';
 
 export default class Menu extends Phaser.Scene {
   constructor() {
@@ -11,12 +11,17 @@ export default class Menu extends Phaser.Scene {
 
   create() {
 
-    this.boton = new Boton(this, this.sys.game.config.width/2, 0, this.avanzar, 'Jugar').setScale(0);
+    //boton
+    this.boton = new BotonCustom(this, this.sys.game.config.width/2, 200, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'Comenzar')
+    this.add.existing(this.boton)
+    this.boton.setInteractive()
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, this.avanzar, this)
 
-    const instrucciones = ["Pulse el botón Jugar para jugar",
-    "El triángulo da dos premios.",
-    "El círculo da un premio.",
-    "El rombo y el cuadrado dan cero premios."]
+    const instrucciones = [
+      "Pulse el botón para comenzar a jugar",
+      "Tres símblos iguales dan 10 premios",
+      "Tres símbolos diferentes dan 5 premios"
+    ]
 
     this.texto = this.add.text(0, 300, instrucciones, {font: '25px fuente', align: 'center'})
     
@@ -26,6 +31,8 @@ export default class Menu extends Phaser.Scene {
   
     contenedor.alpha = 0
     this.boton.setScale(0);
+
+
     
     this.events.on('transitionstart', (fromScene, duration) => {
       this.tweens.add({
