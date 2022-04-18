@@ -1,4 +1,3 @@
-import Boton from './boton';
 import Stats from "../stats";
 
 export default class Simbolo extends Phaser.GameObjects.Container {

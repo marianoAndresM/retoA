@@ -1,6 +1,6 @@
 import ContPremios from "../elementos/marcador";
 import Simbolo from '../elementos/simbolo';
-import BotonCustom from '../elementos/botonCustom';
+import Boton from '../elementos/boton';
 import eventsCenter from '../elementos/manejadorEventos'
 
 export default class Game extends Phaser.Scene {
@@ -33,7 +33,7 @@ export default class Game extends Phaser.Scene {
         let gameH = this.sys.game.config.height;
 
         //texto superior
-        this.add.text(gameW / 2, 100, 'Juego', { font: '50px fuente', fill: '#fff' }).setOrigin(0.5);
+        this.add.text(gameW / 2, 80, 'Juego', { font: '50px fuente', fill: '#fff' }).setOrigin(0.5);
 
         this.simbolo0 = new Simbolo(this, gameW / 2 -200, gameH / 2 - 50, 0);
         this.simbolo1 = new Simbolo(this, gameW / 2, gameH / 2 - 50, 1);
@@ -45,7 +45,7 @@ export default class Game extends Phaser.Scene {
         
         this.contPremios = new ContPremios(this, gameW / 2, gameH - 100);
 
-        this.boton = new BotonCustom(this, gameW / 2, 500, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'JUGAR')
+        this.boton = new Boton(this, gameW / 2, gameH - 25, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'JUGAR')
         this.add.existing(this.boton)
         this.boton.setInteractive()
           .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, this.mezclarTodas, this)
@@ -54,14 +54,10 @@ export default class Game extends Phaser.Scene {
             }, this)
         
         //Volver a habilitar el botón
-        eventsCenter.on('habilitarBoton', function() {
+        eventsCenter.on('habilitarBoton', () => {
             this.boton.setInteractive()
         }, this)
-
-
     }
-
-
 
     mezclarTodas() {
         this.grupoSimbolos.forEach(simbolo => {

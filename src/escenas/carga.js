@@ -10,7 +10,6 @@ import moneda from '../assets/images/moneda.png';
 import monedaAudio from '../assets/audio/monedaAudio.mp3';
 import tadaAudio from '../assets/audio/tadaAudio.mp3';
 import bgMusic from '../assets/audio/bgMusic.mp3';
-import Boton from '../elementos/boton';
 
 export default class Carga extends Phaser.Scene {
   constructor() {
@@ -77,7 +76,7 @@ export default class Carga extends Phaser.Scene {
       duration: 1000
     })
     
-    this.input.on('pointerdown', function () {
+    this.input.on('pointerdown', () =>  {
       this.textoEmpezar.setVisible(false);
       this.progressBar.alpha = 0;
       this.bgBar.alpha = 0;

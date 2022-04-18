@@ -1,40 +1,46 @@
 export default class Boton extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, funcionEjecutar, texto) {
-    super(scene, x, y);
-    this.funcionEjecutar = funcionEjecutar;
-    this.texto = texto;
-    this.active = true
-    
-    //botón
-    this.boton = this.scene.add.text(0, 185, this.texto, { 
-      fontSize: 40,
-      fontFamily: 'fuente',
-      fill: '#ddd'
-     }).setOrigin(0.5);
-    this.boton.depth = 1;
-    
-    //hitArea
-    const hitArea = new Phaser.Geom.Rectangle(-(this.boton.width/2 + 30) , 200 -this.boton.height, this.boton.width + 30, this.boton.height + 20);
-    
-    //forma
-    this.forma = this.scene.add.graphics();
-    this.forma.fillStyle(0x000000, 0.7);
-    this.forma.fillRoundedRect(-(this.boton.width/2 + 30) , 200 -this.boton.height, this.boton.width + 60, this.boton.height + 20, 20);
-    this.forma.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
+  constructor(scene, x, y, downTexture, upTexture, overTexture, texto) {
+    super(scene, x, y)
 
-    if (this.active === true) {
+    this.downImage = scene.add.image(0, 0, downTexture)
+    this.upImage = scene.add.image(0, 0, upTexture)
+    this.overImage = scene.add.image(0, 0, overTexture)
 
-      this.forma.on('pointerover', function() {
-        this.boton.setColor('#fff');
-      }, this);
-      this.forma.on('pointerout', function() {
-        this.boton.setColor('#ddd');
-      }, this);
-      this.forma.on('pointerdown', this.funcionEjecutar, this.scene);
-    }
-    this.add(this.forma)
-    this.add(this.boton);
-    
-    this.scene.add.existing(this);
+    this.texto = scene.add.text(0, 0, texto, {
+       fill: '#000',
+       fontFamily: 'fuente',
+       fontSize: 24 
+      }).setOrigin(0.5)
+
+    this.add(this.downImage)
+    this.add(this.upImage)
+    this.add(this.overImage)
+    this.add(this.texto)
+
+    this.downImage.setVisible(false)
+    this.overImage.setVisible(false)
+
+    this.setSize(this.upImage.width, this.upImage.height)
+
+    this.setInteractive()
+    .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+        this.downImage.setVisible(false)
+        this.upImage.setVisible(false)
+        this.overImage.setVisible(true)
+      })
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+        this.downImage.setVisible(false)
+        this.upImage.setVisible(true)
+        this.overImage.setVisible(false)
+      })
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.downImage.setVisible(true)
+        this.upImage.setVisible(false)
+        this.overImage.setVisible(false)
+      })
+
+
   }
+
+
 }

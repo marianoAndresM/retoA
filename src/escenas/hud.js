@@ -48,10 +48,6 @@ export default class Hud extends Phaser.Scene {
 
     const contenedor = this.add.container(0, 0, this.fondo, this.premiosCantidad);
     this.add.existing(contenedor);
-
-
-
-
   }
 
   comprobarCombinacion() {
@@ -131,7 +127,7 @@ export default class Hud extends Phaser.Scene {
             alpha: {
                 value: 1,
                 duration: 250,
-                ease: 'ELastic',
+                ease: 'Elastic',
                 yoyo: true
             },
             y: {
@@ -182,16 +178,14 @@ export default class Hud extends Phaser.Scene {
         }, 
         repeat: 0,
         completeDelay: 500,
-        onComplete: function () {
-          this.parent.scene.quitarTinte()
+        onComplete: () => {
+          this.quitarTinte()
         }
       }, this)
       
       
     }
   quitarTinte() {
-    console.log('quitando');
     this.tinte.destroy();
-
   }
 }

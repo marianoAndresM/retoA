@@ -1,4 +1,4 @@
-import BotonCustom from '../elementos/botonCustom';
+import Boton from '../elementos/boton';
 
 export default class Menu extends Phaser.Scene {
   constructor() {
@@ -12,7 +12,7 @@ export default class Menu extends Phaser.Scene {
   create() {
 
     //boton
-    this.boton = new BotonCustom(this, this.sys.game.config.width/2, 200, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'Comenzar')
+    this.boton = new Boton(this, this.sys.game.config.width/2, 200, 'botonJugar2', 'botonJugar1', 'botonJugar3', 'Comenzar')
     this.add.existing(this.boton)
     this.boton.setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, this.avanzar, this)
@@ -31,8 +31,6 @@ export default class Menu extends Phaser.Scene {
   
     contenedor.alpha = 0
     this.boton.setScale(0);
-
-
     
     this.events.on('transitionstart', (fromScene, duration) => {
       this.tweens.add({
